@@ -80,16 +80,17 @@ function Showusuarios() {
         
     }
 
-    const validar= () => {
+    const validar = () => {
         var parametros;
         var metodo;
-        if(nombre.trim()===''){
+        console.log(operation);
+        if(nombre.trim() ===''){
             show_alerta('Escribe el nombre', 'warning');
-        }else if(apellidopaterno.trim()===''){
+        }else if(apellidopaterno.trim() ===''){
             show_alerta('Escribe el apellido paterno', 'warning');
         }else if(apellidomaterno.trim()===''){
             show_alerta('Escribe el apellido materno', 'warning');
-        }else if(edad.trim()===''){
+        }else if(edad ===''){
             show_alerta('Escribe la edad', 'warning');
         }else if(codigopostal.trim()===''){
             show_alerta('Escribe codigo postal', 'warning');
@@ -114,11 +115,35 @@ function Showusuarios() {
         }else
         {
             if (operation === 1){
-                parametros= {nombre:nombre.trim(),apellidopaterno:apellidopaterno.trim(), apellidomaterno:apellidomaterno.trim(),edad: edad.trim(), codigopostal:codigopostal.trim(), estadocivil:estadocivil.trim() }
+                parametros= {nombre:nombre.trim(),apellidopaterno:apellidopaterno.trim(), apellidomaterno:apellidomaterno.trim(),edad: edad, codigopostal:codigopostal.trim(), estadocivil:estadocivil.trim(),fechanacimiento:fechanacimiento.trim(), pais:pais.trim(), estado:estado.trim(),municipio:municipio.trim(),localidad:localidad.trim(), idioma:idioma.trim(), pasatiempo:pasatiempo.trim(), preferencias:preferencias.trim()
+                
+            };
+            metodo = 'POST';
+            } else{
+                parametros= {id:id, nombre:nombre.trim(),apellidopaterno:apellidopaterno.trim(), apellidomaterno:apellidomaterno.trim(),edad: edad, codigopostal:codigopostal.trim(), estadocivil:estadocivil.trim(),fechanacimiento:fechanacimiento.trim(), pais:pais.trim(), estado:estado.trim(),municipio:municipio.trim(),localidad:localidad.trim(), idioma:idioma.trim(), pasatiempo:pasatiempo.trim(), preferencias:preferencias.trim()
+                
+                };
+                metodo = 'PATCH';
             }
+            console.log('hola')
+            enviarSolicitud(metodo, parametros);
         }
     }
-    
+    const enviarSolicitud = async (metodo, parametros) => {
+        await axios({method: metodo, url: url, data: parametros}).then(function (respuesta){
+            var tipo = respuesta.data[0];
+            var msj = respuesta.data[1];
+            show_alerta(msj, tipo);
+            if(tipo === 'success'){
+                document.getElementById('btnCerrar').click();
+                getUsuarios();
+            }
+        })
+        .catch(function (error){
+            show_alerta('error de solicitud', 'error');
+            console.log(error);
+        });
+    }
     return (
         <div className='App'>
             <div className='container-fluid'>
@@ -160,7 +185,7 @@ function Showusuarios() {
                                             <td>{usuario.edad}</td>
                                             <td>{usuario.codigopostal}</td>
                                             <td>
-                                                <button onClick={() => openModal(2,usuario.id, usuario.nombre,usuario.apellidopaterno, apellidomaterno, edad, codigopostal, telefono, estadocivil, fechanacimiento, pais, estado, municipio, localidad, idioma, pasatiempo, preferencias)} data-bs-toggle='modal' data-bs-target='#modalUsuarios'className='btn btn-warning'>
+                                                <button onClick={() => openModal(2,usuario.id, usuario.nombre,usuario.apellidopaterno, usuario.apellidomaterno, usuario.edad, usuario.codigopostal, usuario.telefono, usuario.estadocivil, usuario.fechanacimiento, usuario.pais, usuario.estado, usuario.municipio, usuario.localidad, usuario.idioma, usuario.pasatiempo, usuario.preferencias)} data-bs-toggle='modal' data-bs-target='#modalUsuarios'className='btn btn-warning'>
                                                     <i className='fa-solid fa-edit'></i>
                                                 </button>
                                                 &nbsp;
@@ -278,11 +303,11 @@ function Showusuarios() {
                                 <input type='text' id='preferencias' className='form-control' placeholder='Preferencias' value={preferencias} onChange={(e)=> setNombre(e.target.value)}></input>
                             </div>
                             <div className='d-grid col-6 mx-auto'>
-                                <button className='btn btn-success'><i className='fa-solid floppy-disk'></i>Guardar</button>
+                                <button  onClick={() => validar()} className='btn btn-success'><i className='fa-solid fa-gift'></i>Guardar</button>
                             </div>
                         </div>
                         <div className='modal-footer'>
-                            <button type='button' className='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>
+                            <button id ='btnCerrar' type='button' className='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>
                         </div>
                     </div>
                 </div>
