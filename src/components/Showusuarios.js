@@ -34,6 +34,90 @@ function Showusuarios() {
         setUsuarios(respuesta.data);
         
     }
+
+    const openModal = (ope, id, nombre, apellidopaterno, apellidomaterno, edad, codigopostal, telefono, estadocivil, fechanacimiento, pais, estado, municipio, localidad, idioma, pasatiempo, preferencias) =>{
+        setId('');
+        setNombre('');
+        setApellidopaterno('');
+        setApellidomaterno('');
+        setEdad('');
+        setCodigopostal('');
+        setTelefono('');
+        setEstadocivil('');
+        setFechanacimiento('');
+        setPais('');
+        setEstado('');
+        setMunicipio('');
+        setLocalidad('');
+        setIdioma('');
+        setPasatiempo('');
+        setPreferencias('');
+        setOperation(ope);
+        if(ope === 1){
+            setTitle('Registrar Usuario');
+        }else if(ope === 2){
+            setTitle('Editar Usuario');
+            setId(id)
+            setNombre(nombre);
+            setApellidopaterno(apellidopaterno);
+            setApellidomaterno(apellidomaterno);
+            setEdad(edad);
+            setCodigopostal(codigopostal);
+            setTelefono(telefono);
+            setEstadocivil(estadocivil);
+            setFechanacimiento(fechanacimiento);
+            setPais(pais);
+            setEstado(estado);
+            setMunicipio(municipio);
+            setLocalidad(localidad);
+            setIdioma(idioma);
+            setPasatiempo(pasatiempo);
+            setPreferencias(preferencias);
+            }
+            window.setTimeout(function (){
+                document.getElementById('nombre').focus();
+            },500);
+        
+    }
+
+    const validar= () => {
+        var parametros;
+        var metodo;
+        if(nombre.trim()===''){
+            show_alerta('Escribe el nombre', 'warning');
+        }else if(apellidopaterno.trim()===''){
+            show_alerta('Escribe el apellido paterno', 'warning');
+        }else if(apellidomaterno.trim()===''){
+            show_alerta('Escribe el apellido materno', 'warning');
+        }else if(edad.trim()===''){
+            show_alerta('Escribe la edad', 'warning');
+        }else if(codigopostal.trim()===''){
+            show_alerta('Escribe codigo postal', 'warning');
+        }else if(estadocivil.trim()===''){
+            show_alerta('Escribe el estado civil', 'warning');
+        }else if(fechanacimiento.trim()===''){
+            show_alerta('Escribe la fecha de nacimiento', 'warning');
+        }else if(pais.trim()===''){
+            show_alerta('Escribe el pais', 'warning');
+        }else if(estado.trim()===''){
+            show_alerta('Escribe el estado', 'warning');
+        }else if(municipio.trim()===''){
+            show_alerta('Escribe el municipio', 'warning');
+        }else if(localidad.trim()===''){
+            show_alerta('Escribe la localidad', 'warning');
+        }else if(idioma.trim()===''){
+            show_alerta('Escribe el idioma', 'warning');
+        }else if(pasatiempo.trim()===''){
+            show_alerta('Escribe el pasatiempo', 'warning');
+        }else if(preferencias.trim()===''){
+            show_alerta('Escribe las preferencias', 'warning');
+        }else
+        {
+            if (operation === 1){
+                parametros= {nombre:nombre.trim(),apellidopaterno:apellidopaterno.trim(), apellidomaterno:apellidomaterno.trim(),edad: edad.trim(), codigopostal:codigopostal.trim(), estadocivil:estadocivil.trim() }
+            }
+        }
+    }
     
     return (
         <div className='App'>
@@ -41,7 +125,7 @@ function Showusuarios() {
                 <div className='row mt-3'>
                     <div className='col-md-4 offset-4'>
                         <div className='d-grid mx-auto'>
-                            <button className='btn btn-dark' data-bs-toggle='modal' data-bs-target='#modalUsuarios'>
+                            <button onClick={() => openModal(1)} className='btn btn-dark' data-bs-toggle='modal' data-bs-target='#modalUsuarios'>
                                 <i className='fa-solid fa-circle-plus'></i>
                                 Agregar Usuario
                             </button>
@@ -76,11 +160,11 @@ function Showusuarios() {
                                             <td>{usuario.edad}</td>
                                             <td>{usuario.codigopostal}</td>
                                             <td>
-                                                <button className='btn btn-warning'>
+                                                <button onClick={() => openModal(2,usuario.id, usuario.nombre,usuario.apellidopaterno, apellidomaterno, edad, codigopostal, telefono, estadocivil, fechanacimiento, pais, estado, municipio, localidad, idioma, pasatiempo, preferencias)} data-bs-toggle='modal' data-bs-target='#modalUsuarios'className='btn btn-warning'>
                                                     <i className='fa-solid fa-edit'></i>
                                                 </button>
                                                 &nbsp;
-                                                <button className='btn btn-danger'>
+                                                <button   className='btn btn-danger'>
                                                     <i className='fa-solid fa-trash'></i>
                                                 </button>
                                             </td>
@@ -92,9 +176,9 @@ function Showusuarios() {
                     </div>
                 </div>
             </div>
-            <div className='modal fade' aria-hidden='true'>
+            <div  id='modalUsuarios' className='modal fade' aria-hidden='true'>
                 <div className='modal-dialog'>
-                    <div className='modal-cotent'>
+                    <div className='modal-cotent bg-light'>
                         <div className='modal-header'>
                             <label className='h5'>{title}
                             </label> 
@@ -104,8 +188,101 @@ function Showusuarios() {
                             <input type='hidden' id ='id'>
                             </input>
                             <div className='input-group mb-3'>
-                                <span className='input-group-text'></span>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='nombre' className='form-control' placeholder='nombre' value={nombre} onChange={(e)=> setNombre(e.target.value)}></input>
                             </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='apellidopaterno' className='form-control' placeholder='Apellido paterno' value={apellidopaterno} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='apellidomaterno' className='form-control' placeholder='Apellido Materno' value={apellidomaterno} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='edad' className='form-control' placeholder='Edad' value={edad} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='codigopostal' className='form-control' placeholder='Codigo Postal' value={codigopostal} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='telefono' className='form-control' placeholder='telefono' value={telefono} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='estadocivil' className='form-control' placeholder='Estado Civil' value={estadocivil} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='fechanacimiento' className='form-control' placeholder='Fecha de nacimiento' value={fechanacimiento} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='pais' className='form-control' placeholder='Pais' value={pais} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='estado' className='form-control' placeholder='Estado' value={estado} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='municipio' className='form-control' placeholder='Municipio' value={municipio} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='localidad' className='form-control' placeholder='Localidad' value={localidad} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='idioma' className='form-control' placeholder='Idioma' value={idioma} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='pasatiempo' className='form-control' placeholder='Pasatiempo' value={pasatiempo} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='input-group mb-3'>
+                                <span className='input-group-text'>
+                                    <i className='fa-solid fa-gift'></i>
+                                </span>
+                                <input type='text' id='preferencias' className='form-control' placeholder='Preferencias' value={preferencias} onChange={(e)=> setNombre(e.target.value)}></input>
+                            </div>
+                            <div className='d-grid col-6 mx-auto'>
+                                <button className='btn btn-success'><i className='fa-solid floppy-disk'></i>Guardar</button>
+                            </div>
+                        </div>
+                        <div className='modal-footer'>
+                            <button type='button' className='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>
                         </div>
                     </div>
                 </div>
