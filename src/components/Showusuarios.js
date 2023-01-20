@@ -299,13 +299,13 @@ const Showusuarios = () => {
                                 <span className='input-group-text'>
                                     <i className='fa-solid fa-gift'></i>
                                 </span>
-                                <input type='text' id='1edad' className='form-control' placeholder='Edad' value={edad} onChange={(e)=> setEdad(e.target.value)}></input>
+                                <input type='number' id='1edad' className='form-control' placeholder='Edad' value={edad} onChange={(e)=> setEdad(e.target.value)}></input>
                             </div>
                             <div className='input-group mb-3'>
                                 <span className='input-group-text'>
                                     <i className='fa-solid fa-code'></i>
                                 </span>
-                                <input type='text' id='1codigopostal' className='form-control' placeholder='Codigo Postal' value={codigopostal} onChange={(e)=> setCodigopostal(e.target.value)}></input>
+                                <input type='number' id='1codigopostal' className='form-control' placeholder='Codigo Postal' value={codigopostal} onChange={(e)=> setCodigopostal(e.target.value)}></input>
                             </div>
                             <div className='input-group mb-3'>
                                 <span className='input-group-text'>
